@@ -96,6 +96,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Mensagem" id="mensagem">
 						<input type="hidden" value="<%=dados.apelido%>" id="apelido">
+						<input type="hidden" value="0" id="control">
 						<span class="input-group-btn">
 									<button class="btn btn-default" type="button" id="enviar">Enviar</button>
 								</span>
@@ -113,15 +114,20 @@
 		$('#enviar').click(function () {
 			socket.emit(
 				'sendMsgServer',
-				{ apelido: $('#apelido').val(), mensagem: $('#mensagem').val() }
+				{
+					apelido: $('#apelido').val(),
+					mensagem: $('#mensagem').val(),
+					control: $('#control').val()
+				}
 			);
-
+			$('#control').val(1);
+			$('#mensagem').val("");
 		});
 
 		socket.on('sendMsg', function (data) {
 			var html = ' <div class="dialogo"><h4>' + data.apelido + '</h4><p>' + data.mensagem + '</p></div>';
 			$('#dialogos').append(html);
-			$('#mensagem').val('');
+			window.scrollTo(0, document.body.scrollHeight);
 		});
 
 		socket.on('novoUsuario', function (data) {

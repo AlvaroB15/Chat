@@ -14,10 +14,6 @@ module.exports.init = function (applicantion, req, res) {
         'sendMsg',
         { apelido: dados.apelido, mensagem: 'Acabou de entrar no chat.' });
 
-    applicantion.get('io').emit(
-        'novoUsuario',
-        { apelido: dados.apelido, mensagem: 'Acabou de entrar no chat.' });
-
     res.render('chat', { dados: dados });
 
 }
